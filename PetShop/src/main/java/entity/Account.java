@@ -9,66 +9,76 @@ package entity;
  * @author Admin
  */
 public class Account {
-    private int UserId;
-    private String UserName;
-    private String Pass;
-    private String AccountName;
-    private int RoleId;
+    private String userId;
+    private String userName;
+    private String pass;
+    private String accountName;
+    private int roleId;
+    private String userImg;
 
-    public Account(int UserId, String UserName, String Pass, String AccountName, int RoleId) {
-        this.UserId = UserId;
-        this.UserName = UserName;
-        this.Pass = Pass;
-        this.AccountName = AccountName;
-        this.RoleId = RoleId;
+    public Account() {
     }
 
     
-    
-    public int getUserId() {
-        return UserId;
+    public Account(String userId, String userName, String pass, String accountName, int roleId, String userImg) {
+        this.userId = userId;
+        this.userName = userName;
+        this.pass = pass;
+        this.accountName = accountName;
+        this.roleId = roleId;
+        this.userImg = userImg;
     }
 
-    public void setUserId(int UserId) {
-        this.UserId = UserId;
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
-    public void setUserName(String UserName) {
-        this.UserName = UserName;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPass() {
-        return Pass;
+        return pass;
     }
 
-    public void setPass(String Pass) {
-        this.Pass = Pass;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public String getAccountName() {
-        return AccountName;
+        return accountName;
     }
 
-    public void setAccountName(String AccountName) {
-        this.AccountName = AccountName;
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
     public int getRoleId() {
-        return RoleId;
+        return roleId;
     }
 
-    public void setRoleId(int RoleId) {
-        this.RoleId = RoleId;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getUserImg() {
+        return userImg;
+    }
+
+    public void setUserImg(String userImg) {
+        this.userImg = userImg;
     }
 
     @Override
     public String toString() {
-        return "Account{" + "UserId=" + UserId + ", UserName=" + UserName + ", Pass=" + Pass + ", AccountName=" + AccountName + ", RoleId=" + RoleId + '}';
+        return "Account{" + "userId=" + userId + ", userName=" + userName + ", pass=" + pass + ", accountName=" + accountName + ", roleId=" + roleId + ", userImg=" + userImg + '}';
     }
-
-    
 }
