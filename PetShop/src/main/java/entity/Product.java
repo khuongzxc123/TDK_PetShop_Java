@@ -9,73 +9,77 @@ package entity;
  * @author Admin
  */
 public class Product {
-    private int ProId;
-    private String ProName;
-    private String ProCategory;
-    private double ProPrice;
-    private int ProAmount;
-    private String ProImg;
+    public int proId;
+    public String proName;
+    public String proCategory;
+    public Double proPrice;
+    public int proAmount;
+    public String proImg;
 
-    public Product(int ProId, String ProName, String ProCategory, double ProPrice, int ProAmount, String ProImg) {
-        this.ProId = ProId;
-        this.ProName = ProName;
-        this.ProCategory = ProCategory;
-        this.ProPrice = ProPrice;
-        this.ProAmount = ProAmount;
-        this.ProImg = ProImg;
+    public Product() {
     }
 
+    
     public int getProId() {
-        return ProId;
+        return proId;
     }
 
-    public void setProId(int ProId) {
-        this.ProId = ProId;
+    public void setProId(int proId) {
+        this.proId = proId;
     }
 
     public String getProName() {
-        return ProName;
+        return proName;
     }
 
-    public void setProName(String ProName) {
-        this.ProName = ProName;
-    }
-
-    public double getProPrice() {
-        return ProPrice;
-    }
-
-    public void setProPrice(double ProPrice) {
-        this.ProPrice = ProPrice;
-    }
-
-    public int getProAmount() {
-        return ProAmount;
-    }
-
-    public void setProAmount(int ProAmount) {
-        this.ProAmount = ProAmount;
-    }
-
-    public String getProImg() {
-        return ProImg;
-    }
-
-    public void setProImg(String ProImg) {
-        this.ProImg = ProImg;
+    public void setProName(String proName) {
+        this.proName = proName;
     }
 
     public String getProCategory() {
-        return ProCategory;
+        return proCategory;
     }
 
-    public void setProCategory(String ProCategory) {
-        this.ProCategory = ProCategory;
+    public void setProCategory(String proCategory) {
+        this.proCategory = proCategory;
+    }
+
+    public Double getProPrice() {
+        return proPrice;
+    }
+
+    public void setProPrice(Double proPrice) {
+        this.proPrice = proPrice;
+    }
+
+    public int getProAmount() {
+        return proAmount;
+    }
+
+    public void setProAmount(int proAmount) {
+        this.proAmount = proAmount;
+    }
+
+    public String getProImg() {
+        return proImg;
+    }
+
+    public void setProImg(String proImg) {
+        this.proImg = proImg;
+    }
+
+    public Product(int proId, String proName, String proCategory, Double proPrice, int proAmount, String proImg) {
+        this.proId = proId;
+        this.proName = proName;
+        this.proCategory = proCategory;
+        this.proPrice = proPrice;
+        this.proAmount = proAmount;
+        this.proImg = proImg;
     }
 
     @Override
     public String toString() {
-        return "Product{" + "ProId=" + ProId + ", ProName=" + ProName + ", ProCategory=" + ProCategory + ", ProPrice=" + ProPrice + ", ProAmount=" + ProAmount + ", ProImg=" + ProImg + '}';
+        return "Product{" + "proId=" + proId + ", proName=" + proName + ", proCategory=" + proCategory + ", proPrice=" + proPrice + ", proAmount=" + proAmount + ", proImg=" + proImg + '}';
     }
 
 }
