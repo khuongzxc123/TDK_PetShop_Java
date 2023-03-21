@@ -4,17 +4,21 @@
  */
 package control;
 
+import dao.DAO;
+import entity.Account;
+import entity.Product;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.annotation.WebServlet;
-import dao.DAO;
-import entity.Category;
-import entity.Product;
-import java.util.List;
+
 /**
  *
  * @author Admin
@@ -33,13 +37,21 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         //Get DATA from DAO
+        String imageDirectory = "assets/img/product";
+//        String imageDirectory2 = "assets/img/account";
         DAO dao = new DAO();
-        List<Product> list = dao.getAllProduct();
-        List<Category> listC = dao.getAllCategory();
+        List<Product> listP = dao.getAllProduct();
+//        List<Account> listA = dao.getAllAccount();
+        for (Product o : listP) {
+            String imgUrl = imageDirectory + "/" + o.getProImg();
+            o.setProImg(imgUrl);
+        }
+//        for(Account a : listA){
+//            String imgUrl = imageDirectory2 + "/" + a.getUserImg();
+//            a.setUserImg(imgUrl);
+//        }
         //Set DATA to JSP
-        request.setAttribute("listP", list);
-        request.setAttribute("listC", listC);
+        request.setAttribute("listP", listP);
         request.getRequestDispatcher("Home.jsp").forward(request, response);
     }
 

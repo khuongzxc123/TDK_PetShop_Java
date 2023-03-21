@@ -9,33 +9,34 @@ package entity;
  * @author Admin
  */
 public class Category {
-    private int CategoryId;
-    private String CategoryName;
+    private int categoryId;
+    private String categoryName;
 
-    public Category(int CategoryId, String CategoryName) {
-        this.CategoryId = CategoryId;
-        this.CategoryName = CategoryName;
+    public Category(int categoryId, String categoryName) {
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
     }
 
     public int getCategoryId() {
-        return CategoryId;
+        return categoryId;
     }
 
-    public void setCategoryId(int CategoryId) {
-        this.CategoryId = CategoryId;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getCategoryName() {
-        return CategoryName;
+        return categoryName;
     }
 
-    public void setCategoryName(String CategoryName) {
-        this.CategoryName = CategoryName;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     @Override
     public String toString() {
-        return "Category{" + "CategoryId=" + CategoryId + ", CategoryName=" + CategoryName + '}';
+        return "Category{" + "categoryId=" + categoryId + ", categoryName=" + categoryName + '}';
     }
+
     
 }
