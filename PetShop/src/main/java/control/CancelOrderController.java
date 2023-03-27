@@ -5,27 +5,18 @@
 package control;
 
 import dao.DAO;
-import entity.Account;
-import entity.Cart;
-import entity.Product;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Admin
  */
-public class HomeController extends HttpServlet {
+public class CancelOrderController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,27 +30,12 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String imageDirectory = "assets/img/product";
-//        String imageDirectory2 = "assets/img/account";
         DAO dao = new DAO();
-        HttpSession session = request.getSession();
-        List<Product> listP = dao.getAllProduct();
-//        List<Account> listA = dao.getAllAccount();
-        for (Product o : listP) {
-            String imgUrl = imageDirectory + "/" + o.getProImg();
-            o.setProImg(imgUrl);
+        String id = request.getParameter("id");
+        if(id!=null){
+            dao.cancelOrder(Integer.parseInt(id));
         }
-        ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
-        if (cart_list != null) {
-            request.setAttribute("cart_list", cart_list);
-        }
-//        for(Account a : listA){
-//            String imgUrl = imageDirectory2 + "/" + a.getUserImg();
-//            a.setUserImg(imgUrl);
-//        }
-        //Set DATA to JSP
-        request.setAttribute("listP", listP);
-        request.getRequestDispatcher("Home.jsp").forward(request, response);
+        response.sendRedirect("Orders.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

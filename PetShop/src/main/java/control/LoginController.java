@@ -6,8 +6,10 @@ package control;
 
 import dao.DAO;
 import entity.Account;
+import entity.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -34,14 +36,18 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         DAO dao = new DAO();
+        HttpSession session = request.getSession();
         String userName = request.getParameter("username");
         String pass = request.getParameter("password");
         String imageDirectory2 = "assets/img/account";
         Account account = dao.loginUser(userName, pass);
+        ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
+        if (cart_list != null) {
+            request.setAttribute("cart_list", cart_list);
+        }
         if(account != null){
             String imgUrl = imageDirectory2 + "/" + account.getUserImg();
             account.setUserImg(imgUrl);
-            HttpSession session = request.getSession();
             session.setAttribute("account", account);
             session.setMaxInactiveInterval(1440);
             response.sendRedirect("home");

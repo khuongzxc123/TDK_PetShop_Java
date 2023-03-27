@@ -4,28 +4,20 @@
  */
 package control;
 
-import dao.DAO;
-import entity.Account;
 import entity.Cart;
-import entity.Product;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Admin
  */
-public class HomeController extends HttpServlet {
+public class QuantityController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,27 +31,47 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String imageDirectory = "assets/img/product";
-//        String imageDirectory2 = "assets/img/account";
-        DAO dao = new DAO();
-        HttpSession session = request.getSession();
-        List<Product> listP = dao.getAllProduct();
-//        List<Account> listA = dao.getAllAccount();
-        for (Product o : listP) {
-            String imgUrl = imageDirectory + "/" + o.getProImg();
-            o.setProImg(imgUrl);
-        }
-        ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
-        if (cart_list != null) {
-            request.setAttribute("cart_list", cart_list);
-        }
-//        for(Account a : listA){
-//            String imgUrl = imageDirectory2 + "/" + a.getUserImg();
-//            a.setUserImg(imgUrl);
+//        try ( PrintWriter out = response.getWriter()) {
+//            /* TODO output your page here. You may use following sample code. */
+//            out.println("<!DOCTYPE html>");
+//            out.println("proId");
+//            out.println("<head>");
+//            out.println("<title>Servlet QuantityController</title>");            
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<h1>Servlet QuantityController at " + request.getContextPath() + "</h1>");
+//            out.println("</body>");
+//            out.println("</html>");
 //        }
-        //Set DATA to JSP
-        request.setAttribute("listP", listP);
-        request.getRequestDispatcher("Home.jsp").forward(request, response);
+        String action = request.getParameter("action");
+        int id = Integer.parseInt(request.getParameter("proId"));
+        ArrayList<Cart> cart_list = (ArrayList<Cart>) request.getSession().getAttribute("cart-list");
+
+        if (action != null && id >= 1) {
+            if (action.equals("inc")) {
+                for (Cart c : cart_list) {
+                    if (c.getProId() == id) {
+                        int quantity = c.getQuantity();
+                        quantity++;
+                        c.setQuantity(quantity);
+                        response.sendRedirect("Cart.jsp");
+                    }
+                }
+            }
+            if (action.equals("dec")) {
+                for (Cart c : cart_list) {
+                    if (c.getProId() == id && c.getQuantity() > 1) {
+                        int quantity = c.getQuantity();
+                        quantity--;
+                        c.setQuantity(quantity);
+                        break;
+                    }
+                }
+                response.sendRedirect("Cart.jsp");
+            }
+        }else{
+           response.sendRedirect("Cart.jsp"); 
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

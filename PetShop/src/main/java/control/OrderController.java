@@ -7,25 +7,22 @@ package control;
 import dao.DAO;
 import entity.Account;
 import entity.Cart;
-import entity.Product;
-import java.awt.image.BufferedImage;
-import java.io.File;
+import entity.Order;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
-import javax.imageio.ImageIO;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Admin
  */
-public class HomeController extends HttpServlet {
+public class OrderController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,27 +36,53 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String imageDirectory = "assets/img/product";
-//        String imageDirectory2 = "assets/img/account";
         DAO dao = new DAO();
-        HttpSession session = request.getSession();
-        List<Product> listP = dao.getAllProduct();
-//        List<Account> listA = dao.getAllAccount();
-        for (Product o : listP) {
-            String imgUrl = imageDirectory + "/" + o.getProImg();
-            o.setProImg(imgUrl);
+        PrintWriter out = response.getWriter();
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = new Date();
+        Account account = (Account) request.getSession().getAttribute("account");
+        if (account != null) {
+            String proId = request.getParameter("proId");
+            int proQuantity = Integer.parseInt(request.getParameter("quantity"));
+            if (proQuantity <= 0) {
+                proQuantity = 1;
+            }
+
+            Order orderModel = new Order();
+            orderModel.setProId(Integer.parseInt(proId));
+            orderModel.setUid(Integer.parseInt(account.getUserId()));
+            orderModel.setQuantity(proQuantity);
+            orderModel.setDate(formatter.format(date));
+            boolean result = dao.insertOrder(orderModel);
+            if (result) {
+                ArrayList<Cart> cart_list = (ArrayList<Cart>) request.getSession().getAttribute("cart-list");
+                if (cart_list != null) {
+                    for (Cart c : cart_list) {
+                        if (c.getProId() == Integer.parseInt(proId)) {
+                            cart_list.remove(cart_list.indexOf(c));
+                            break;
+                        }
+                    }
+                }
+                response.sendRedirect("Orders.jsp");
+            } else {
+                out.println("Order failed.");
+            }
+        } else {
+            response.sendRedirect("Login.jsp");
         }
-        ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
-        if (cart_list != null) {
-            request.setAttribute("cart_list", cart_list);
-        }
-//        for(Account a : listA){
-//            String imgUrl = imageDirectory2 + "/" + a.getUserImg();
-//            a.setUserImg(imgUrl);
+//        try ( PrintWriter out = response.getWriter()) {
+//            /* TODO output your page here. You may use following sample code. */
+//            out.println("Order Page");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet OrderController</title>");            
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<h1>Servlet OrderController at " + request.getContextPath() + "</h1>");
+//            out.println("</body>");
+//            out.println("</html>");
 //        }
-        //Set DATA to JSP
-        request.setAttribute("listP", listP);
-        request.getRequestDispatcher("Home.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

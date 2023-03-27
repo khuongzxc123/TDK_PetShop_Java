@@ -47,6 +47,26 @@
         <servlet-name>CartController</servlet-name>
         <servlet-class>control.CartController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>QuantityController</servlet-name>
+        <servlet-class>control.QuantityController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RemoveCartController</servlet-name>
+        <servlet-class>control.RemoveCartController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderController</servlet-name>
+        <servlet-class>control.OrderController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckoutController</servlet-name>
+        <servlet-class>control.CheckoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelOrderController</servlet-name>
+        <servlet-class>control.CancelOrderController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -90,6 +110,26 @@
     <servlet-mapping>
         <servlet-name>CartController</servlet-name>
         <url-pattern>/cart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>QuantityController</servlet-name>
+        <url-pattern>/quantity-inc-dec</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveCartController</servlet-name>
+        <url-pattern>/removecart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderController</servlet-name>
+        <url-pattern>/order</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckoutController</servlet-name>
+        <url-pattern>/cartcheckout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelOrderController</servlet-name>
+        <url-pattern>/cancelorder</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
