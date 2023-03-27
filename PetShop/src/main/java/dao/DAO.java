@@ -9,6 +9,7 @@ import entity.Account;
 import entity.Cart;
 import entity.Category;
 import entity.Item;
+import entity.Order;
 import entity.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -289,12 +290,12 @@ public class DAO {
                     ps = conn.prepareStatement(query);
                     ps.setInt(1, item.getProId());
                     rs = ps.executeQuery();
-                    while(rs.next()){
+                    while (rs.next()) {
                         Cart row = new Cart();
                         row.setProId(rs.getInt("proId"));
                         row.setProName(rs.getString("proName"));
                         row.setProCategory(rs.getString("proCategory"));
-                        row.setProPrice(rs.getDouble("proPrice")*item.getQuantity());
+                        row.setProPrice(rs.getDouble("proPrice") * item.getQuantity());
                         row.setQuantity(item.getQuantity());
                         products.add(row);
                     }
@@ -306,6 +307,78 @@ public class DAO {
         return products;
     }
 
+    public double getTotal(ArrayList<Cart> cartList) {
+        double sum = 0;
+        try {
+            if (cartList.size() > 0) {
+                for (Cart item : cartList) {
+                    String query = "select ProPrice from petshop.product where ProId = ?";
+                    ps = conn.prepareStatement(query);
+                    ps.setInt(1, item.getProId());
+                    rs = ps.executeQuery();
+                    while(rs.next()){
+                        sum += rs.getDouble("proPrice")*item.getQuantity();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return sum;
+    }
+    
+    public boolean insertOrder(Order model){
+        boolean result = false;
+        try{
+            String query = "insert into petshop.order(productId, userId, orderQuantity, orderDate) values(?,?,?,?)";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, model.getProId());
+            ps.setInt(2, model.getUid());
+            ps.setInt(3,model.getQuantity());
+            ps.setString(4,model.getDate());
+            ps.executeUpdate();
+            result = true;
+        }catch(Exception e){ e.printStackTrace(); }
+        return result;
+    }
+
+    public List<Order> userOrders(int id){
+        List<Order> list = new ArrayList<>();
+        try{
+            String query = "SELECT * FROM petshop.order where userId=? order by petshop.order.orderId desc";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while(rs.next()){
+                Order order = new Order();
+                DAO dao = new DAO();
+                String pId = rs.getString("productId");
+                Product product = dao.getProductByID(pId);
+                order.setOrderId(rs.getInt("orderId"));
+                order.setProId(Integer.parseInt(pId));
+                order.setProName(product.getProName());
+                order.setProCategory(product.getProCategory());
+                order.setProPrice(product.getProPrice() * rs.getInt("orderQuantity"));
+                order.setQuantity(rs.getInt("orderQuantity"));
+                order.setDate(rs.getString("orderDate"));
+                list.add(order);
+            }
+        }catch(Exception e){ e.printStackTrace();}
+        return list;
+    }
+    
+    public void cancelOrder(int id){
+        try{
+            String query = "delete from petshop.order where orderid=?";
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        }catch(Exception e){ e.printStackTrace(); }
+    }
+    
     public static void main(String[] args) {
 //        DAO dao = new DAO();
 //        List<Product> listP = dao.getAllProduct();
