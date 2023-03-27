@@ -3,6 +3,7 @@
     Created on : Mar 21, 2023, 1:47:59 PM
     Author     : Admin
 --%>
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="dao.DAO"%>
 <%@page import="java.util.List"%>
 <%@page import="entity.Cart"%>
@@ -10,12 +11,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
+    DecimalFormat dcf = new DecimalFormat("#,##0.000");
+    request.setAttribute("dcf", dcf);
     ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
     List<Cart> cartProduct = null;
     if (cart_list != null) {
         DAO dao = new DAO();
         cartProduct = dao.getCartProducts(cart_list);
+        double total = dao.getTotal(cart_list);
         request.setAttribute("cart_list", cart_list);
+        request.setAttribute("total", total);
     }
 %>
 <!DOCTYPE html>
@@ -182,13 +187,19 @@
 
             <div class="pagetitle">
                 <h1>Dashboard</h1>
+
             </div><!-- End Page Title -->
 
             <div class="container">
                 <div class="row">
+                    <div class="d-flex py-3">
+                        <h3>Total: ${(total>0)?dcf.format(total):0} VNĐ</h3>
+                        <a class="mx-3 btn btn-primary" href="cartcheckout">Check out</a>
+                    </div>
+
                     <table class="table table-borderless">
                         <tr>
-                            <td>Name</td>
+                            <td style="text-align: center">Name</td>
                             <td style="text-align: center">Category</td>
                             <td style="text-align: center">Price</td>
                             <td style="text-align: center">Quantity</td>
@@ -197,20 +208,22 @@
                         <% if (cart_list != null) {
                                 for (Cart c : cartProduct) {%>
                         <tr>
-                            <td><%= c.getProName()%></td>
-                            <td style="text-align: center"><%= c.getProCategory() %></td>
-                            <td style="text-align: center"><%= c.getProPrice()%></td>
+                            <td style="text-align: center"><%= c.getProName()%></td>
+                            <td style="text-align: center"><%= c.getProCategory()%></td>
+                            <td style="text-align: center"><%= dcf.format(c.getProPrice())%></td>
                             <td style="text-align: center">
-                                <form action="" method="post" class="form-check-inline">
+                                <form action="order" method="post" class="form-check-inline">
                                     <input type="hidden" name="proId" value="<%= c.getProId()%>" class="form-control">
-                                    <div class="form-group d-flex justify-content-between">
-                                        <a class="btn btn-sm btn-decre" href=""><i class="fas fa-minus-square-square">-</i></a>
-                                        <input type="text" name="quantity" id = "soluong" value="1" class="form-control" style="text-align: center" readonly>
-                                        <a class="btn btn-sm btn-incre" href=""><i class="fas fa-plus-square-square">+</i></a>
+                                    <div class="form-group d-flex justify-content-between w-100">
+                                        <a class="btn btn-sm btn-decre" href="quantity-inc-dec?action=dec&proId=<%= c.getProId()%>"><i class="fas fa-minus-square-square">-</i></a>
+                                        <input type="text" name="quantity" value="<%= c.getQuantity()%>" class="form-control w-50" style="text-align: center;" readonly>
+                                        <a class="btn btn-sm btn-incre" href="quantity-inc-dec?action=inc&proId=<%= c.getProId()%>"><i class="fas fa-plus-square-square">+</i></a>
+                                    <button type="submit" class="btn btn-primary btn-sm">Buy</button>
                                     </div>
                                 </form>
                             </td>
-                            <td style="text-align: center"><a class="btn btn-danger btn-sm" href="">Remove</a></td>
+                            <td style="text-align: center"><a class="btn btn-danger btn-sm" href="removecart?proId=<%= c.getProId()%>">Remove</a></td>
+                            
                         </tr>
                         <%}
                             }

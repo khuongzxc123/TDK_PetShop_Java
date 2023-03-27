@@ -8,36 +8,28 @@ package entity;
  *
  * @author Admin
  */
-public class Order {
-    private int id;
-    private String date;
+public class Order extends Product{
+    private int orderId;
     private int uid;
-    private double total;
+    private int quantity;
+    private String date;
 
     public Order() {
     }
 
-    public Order(int id, String date, int uid, double total) {
-        this.id = id;
-        this.date = date;
+    public Order(int orderId, int uid, int quantity, String date) {
+        this.orderId = orderId;
         this.uid = uid;
-        this.total = total;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
+        this.quantity = quantity;
         this.date = date;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public int getUid() {
@@ -48,13 +40,26 @@ public class Order {
         this.uid = uid;
     }
 
-    public double getTotal() {
-        return total;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
-    
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" + "orderId=" + orderId + ", uid=" + uid + ", quantity=" + quantity + ", date=" + date + '}';
+    }
+
     
 }

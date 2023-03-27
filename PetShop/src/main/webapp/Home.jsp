@@ -3,8 +3,13 @@
     Created on : Mar 10, 2023, 3:35:32 PM
     Author     : Admin
 --%>
+<%@page import="java.text.DecimalFormat"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    DecimalFormat dcf = new DecimalFormat("#,##0.000");
+    request.setAttribute("dcf", dcf);
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -65,6 +70,12 @@
                             <i class="bi bi-search"></i>
                         </a>
                     </li><!-- End Search Icon-->
+                    <a class="nav-link nav-icon" href="Cart.jsp">
+                        <i>Cart<span class="badge bg-primary badge-number">${cart_list.size()}</span></i>
+                    </a>
+                    <a class="nav-link nav-icon" href="Orders.jsp">
+                        <i>Order</i>
+                    </a>
                     <!-- End Notification Nav -->
                     <!-- End Messages Nav -->
                     <c:if test="${sessionScope.account.userName != null}">
@@ -187,8 +198,8 @@
                                         </div>
                                         <div class="col-md-5 col-sm-12 col-xs-12">
                                             <div class="product-deatil">
-                                                <h5 class="name" style="text-align:center; padding-right: 15px"><a href="#">${product.proName}</a></h5>
-                                                <p class="price-container" style="padding-left: 10px;"><span>${product.proPrice}   VNĐ</span></p>
+                                                <h5 class="name" style="text-align:center; padding-right: 10px"><a href="#">${product.proName}</a></h5>
+                                                <p name="proPrice" class="price-container" style="text-align:center; padding-right: 10px"><span>${dcf.format(product.proPrice)} VNĐ</span></p>
                                                 <span class="tag1"></span>
                                             </div>
                                             <div class="description">
@@ -199,9 +210,9 @@
                                                     <div class="col-md-12">
                                                         <input type="hidden" value="${product.proId}" name="id">
                                                         <input type="hidden" value="${product.proName}" name="name">
-                                                        <input type="hidden" value="${product.proPrice}" name="price">
+                                                        <input type="hidden" value="${product.proPrice}" name="proPrice">
                                                         <input type="hidden" value="${product.proImg}" name="image">
-                                                        <input type="submit" class="btn btn-danger" herf="cart?id=${product.proId}" value="Add to Cart">
+                                                        <input type="submit" class="btn btn-danger" herf="cart?id=${product.proId}" value="Add to Cart" style="padding-right: 10px">
                                                     </div>
                                                 </div>
                                             </div>
