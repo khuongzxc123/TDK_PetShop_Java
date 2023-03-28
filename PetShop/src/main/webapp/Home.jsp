@@ -17,7 +17,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Pet Shop</title>
         <!-- Favicons -->
-        <link href="assets/img/favicon.png" rel="icon">
+        <link href="assets/img/icon.png" rel="icon">
         <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
         <!-- Google Fonts -->
@@ -49,8 +49,8 @@
 
             <div class="d-flex align-items-center justify-content-between">
                 <a href="home" class="logo d-flex align-items-center">
-                    <img src="assets/img/logo.png" alt="">
-                    <span class="d-none d-lg-block">NiceAdmin</span>
+                    <img src="assets/img/icon.png" alt="">
+                    <span class="d-none d-lg-block">Pet Shop</span>
                 </a>
                 <i class="bi bi-list toggle-sidebar-btn"></i>
             </div><!-- End Logo -->
@@ -80,14 +80,14 @@
                     <!-- End Messages Nav -->
                     <c:if test="${sessionScope.account.userName != null}">
                         <li class="nav-item dropdown pe-3">
-                            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="" data-bs-toggle="dropdown">
                                 <img src="${sessionScope.account.userImg}" alt="Profile" class="rounded-circle" width="50" height="50">
                                 <span class="d-none d-md-block dropdown-toggle ps-2"></span>
                             </a><!-- End Profile Image Icon -->
 
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                                    <a class="dropdown-item d-flex align-items-center" href="">
                                         <i class="bi bi-person"></i>
                                         <span>Hello ${sessionScope.account.accountName}</span>
                                     </a>
@@ -149,7 +149,6 @@
 
                 <!-- End Icons Nav -->
 
-                <li class="nav-heading">Pages</li>
 
                 <!-- End Profile Page Nav -->
 
@@ -181,7 +180,7 @@
         <main id="main" class="main">
 
             <div class="pagetitle">
-                <h1>Dashboard</h1>
+                <h1>Home Page</h1>
             </div><!-- End Page Title -->
 
             <div class="container">
@@ -268,15 +267,16 @@
         <!-- ======= Footer ======= -->
         <footer id="footer" class="footer">
             <div class="copyright">
-                &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+                Call us: <strong><span>+999999999</span></strong>.<br>
+                Email: <strong><span>petshop.store@gmail.com</span></strong>.
             </div>
-            <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-            </div>
+            <!--            <div class="credits">
+                             All the links in the footer should remain intact. 
+                             You can delete the links only if you purchased the pro version. 
+                             Licensing information: https://bootstrapmade.com/license/ 
+                             Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ 
+                            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                        </div>-->
         </footer><!-- End Footer -->
 
         <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
