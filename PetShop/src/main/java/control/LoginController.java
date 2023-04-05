@@ -39,14 +39,14 @@ public class LoginController extends HttpServlet {
         HttpSession session = request.getSession();
         String userName = request.getParameter("username");
         String pass = request.getParameter("password");
-        String imageDirectory2 = "assets/img/account";
+        
         Account account = dao.loginUser(userName, pass);
         ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
         if (cart_list != null) {
             request.setAttribute("cart_list", cart_list);
         }
         if(account != null){
-            String imgUrl = imageDirectory2 + "/" + account.getUserImg();
+            String imgUrl = account.getUserImg();
             account.setUserImg(imgUrl);
             session.setAttribute("account", account);
             session.setMaxInactiveInterval(1440);

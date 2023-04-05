@@ -71,6 +71,27 @@ public class DAO {
         }
         return null;
     }
+    
+    public List<Product> getProductByCategoryID(String proCategory) {
+        List<Product> list = new ArrayList<>();
+        String query = "select * from petshop.product\n"
+                + "where ProCategory = ?";
+        try {
+            conn = new DBContext().getConnection();//mo ket noi voi sql
+            ps = conn.prepareStatement(query);
+            ps.setString(1, proCategory);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDouble(4),
+                        rs.getInt(5),
+                        rs.getString(6)));
+            }
+        } catch (Exception e) {}
+        return list;
+    }
 
     public void insertProduct(String ProName, String ProCategory, String ProPrice, String ProAmount, String ProImg) {
         String query = "insert into petshop.product(ProName, ProCategory, ProPrice, ProAmount, ProImg) values (?, ?, ?, ?, ?)";
@@ -107,7 +128,6 @@ public class DAO {
                 + "ProAmount = ?, "
                 + "ProImg = ?\n"
                 + "where ProId = ?";
-        Scanner scanner = new Scanner(System.in);
         try {
             conn = new DBContext().getConnection();//mo ket noi voi sql
             ps = conn.prepareStatement(query);
@@ -125,6 +145,19 @@ public class DAO {
     //
     //Account
     //
+    
+    public void deleteAccount(String userId) {
+        String query = "delete from petshop.account\n"
+                + "where UserId = ?";
+        try {
+            conn = new DBContext().getConnection();//mo ket noi voi sql
+            ps = conn.prepareStatement(query);
+            ps.setString(1, userId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+    
     public List<Account> getAllAccount() {
         List<Account> list = new ArrayList<>();
         String query = "SELECT * FROM petshop.account";
@@ -295,7 +328,8 @@ public class DAO {
                         row.setProId(rs.getInt("proId"));
                         row.setProName(rs.getString("proName"));
                         row.setProCategory(rs.getString("proCategory"));
-                        row.setProPrice(rs.getDouble("proPrice") * item.getQuantity());
+                        row.setProPrice(rs.getDouble("proPrice"));
+                        row.setTotal_quantity(rs.getDouble("proPrice") * item.getQuantity());
                         row.setQuantity(item.getQuantity());
                         products.add(row);
                     }
@@ -316,8 +350,8 @@ public class DAO {
                     ps = conn.prepareStatement(query);
                     ps.setInt(1, item.getProId());
                     rs = ps.executeQuery();
-                    while(rs.next()){
-                        sum += rs.getDouble("proPrice")*item.getQuantity();
+                    while (rs.next()) {
+                        sum += rs.getDouble("proPrice") * item.getQuantity();
                     }
                 }
             }
@@ -326,32 +360,35 @@ public class DAO {
         }
         return sum;
     }
-    
-    public boolean insertOrder(Order model){
+
+    public boolean insertOrder(Order model) {
         boolean result = false;
-        try{
+
+        try {
             String query = "insert into petshop.order(productId, userId, orderQuantity, orderDate) values(?,?,?,?)";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, model.getProId());
             ps.setInt(2, model.getUid());
-            ps.setInt(3,model.getQuantity());
-            ps.setString(4,model.getDate());
+            ps.setInt(3, model.getQuantity());
+            ps.setString(4, model.getDate());
             ps.executeUpdate();
             result = true;
-        }catch(Exception e){ e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return result;
     }
 
-    public List<Order> userOrders(int id){
+    public List<Order> userOrders(int id) {
         List<Order> list = new ArrayList<>();
-        try{
+        try {
             String query = "SELECT * FROM petshop.order where userId=? order by petshop.order.orderId desc";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 Order order = new Order();
                 DAO dao = new DAO();
                 String pId = rs.getString("productId");
@@ -365,22 +402,26 @@ public class DAO {
                 order.setDate(rs.getString("orderDate"));
                 list.add(order);
             }
-        }catch(Exception e){ e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return list;
     }
-    
-    public void cancelOrder(int id){
-        try{
+
+    public void cancelOrder(int id) {
+        try {
             String query = "delete from petshop.order where orderid=?";
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
             ps.setInt(1, id);
             ps.executeUpdate();
-        }catch(Exception e){ e.printStackTrace(); }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    
+
     public static void main(String[] args) {
-//        DAO dao = new DAO();
+        
 //        List<Product> listP = dao.getAllProduct();
 //        for(Product o : listP){
 //            System.out.println(o);

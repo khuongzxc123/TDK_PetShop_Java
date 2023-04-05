@@ -81,17 +81,18 @@
                     <c:if test="${sessionScope.account.userName != null}">
                         <li class="nav-item dropdown pe-3">
                             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="" data-bs-toggle="dropdown">
-                                <img src="${sessionScope.account.userImg}" alt="Profile" class="rounded-circle" width="50" height="50">
+                                <img src="assets/img/account/${sessionScope.account.userImg}" class="rounded-circle" width="50" height="50">
+                                <span>${sessionScope.account.accountName}</span>
                                 <span class="d-none d-md-block dropdown-toggle ps-2"></span>
                             </a><!-- End Profile Image Icon -->
 
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="">
-                                        <i class="bi bi-person"></i>
-                                        <span>Hello ${sessionScope.account.accountName}</span>
-                                    </a>
-                                </li>
+                                <!--                                <li>
+                                                                    <a class="dropdown-item d-flex align-items-center" href="">
+                                                                        <i class="bi bi-person"></i>
+                                                                        <span>Hello ${sessionScope.account.accountName}</span>
+                                                                    </a>
+                                                                </li>-->
 
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center" href="loaduser?uid=${sessionScope.account.userId}">
@@ -181,10 +182,19 @@
 
             <div class="pagetitle">
                 <h1>Home Page</h1>
+
             </div><!-- End Page Title -->
 
             <div class="container">
                 <div class="row">
+                    <form action="category" method="get">
+                        <select name="categoryId">
+                            <c:forEach items="${listC}" var="category">
+                                <option value="${category.categoryId}">${category.categoryName}</option>
+                            </c:forEach>
+                        </select>
+                        <button type="submit" class="btn btn-primary btn-sm">Go</button>
+                    </form>
                     <c:forEach var="product" items="${listP}">
                         <div class="col-xs-4 col-md-4">
                             <form action="cart" method="get">
@@ -192,7 +202,7 @@
                                     <div class="row">
                                         <div class="col-md-7 col-sm-12 col-xs-12" >
                                             <div class="product-image" style="width: 300px; height: 300px">
-                                                <img src="${product.proImg}" style="width: 100%; height: 100%">
+                                                <img src="assets/img/product/${product.proImg}" style="width: 100%; height: 100%">
                                             </div>
                                         </div>
                                         <div class="col-md-5 col-sm-12 col-xs-12">

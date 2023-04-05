@@ -24,13 +24,13 @@
         response.sendRedirect("Login.jsp");
     }
     ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
-//    List<Cart> cartProduct = null;
+    List<Cart> cartProduct = null;
     if (cart_list != null) {
-//        DAO dao = new DAO();
-//        cartProduct = dao.getCartProducts(cart_list);
-//        double total = dao.getTotal(cart_list);
+        DAO dao = new DAO();
+        cartProduct = dao.getCartProducts(cart_list);
+        double total = dao.getTotal(cart_list);
         request.setAttribute("cart_list", cart_list);
-//        request.setAttribute("total", total);
+        request.setAttribute("total", total);
     }
 %>
 <!DOCTYPE html>
@@ -99,17 +99,19 @@
                     <c:if test="${sessionScope.account.userName != null}">
                         <li class="nav-item dropdown pe-3">
                             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="" data-bs-toggle="dropdown">
-                                <img src="${sessionScope.account.userImg}" alt="Profile" class="rounded-circle" width="50" height="50">
+                                <img src="assets/img/account/${sessionScope.account.userImg}" alt="Profile" class="rounded-circle" width="50" height="50">
+                                <span>${sessionScope.account.accountName}</span>
+
                                 <span class="d-none d-md-block dropdown-toggle ps-2"></span>
                             </a><!-- End Profile Image Icon -->
 
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                                <li>
+<!--                                <li>
                                     <a class="dropdown-item d-flex align-items-center" href="">
                                         <i class="bi bi-person"></i>
                                         <span>Hello ${sessionScope.account.accountName}</span>
                                     </a>
-                                </li>
+                                </li>-->
 
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center" href="loaduser?uid=${sessionScope.account.userId}">
@@ -274,18 +276,18 @@
         </main><!-- End #main -->
 
         <!-- ======= Footer ======= -->
-<!--        <footer id="footer" class="footer">
-            <div class="copyright">
-                &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-            </div>
-            <div class="credits">
-                 All the links in the footer should remain intact. 
-                 You can delete the links only if you purchased the pro version. 
-                 Licensing information: https://bootstrapmade.com/license/ 
-                 Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ 
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-            </div>
-        </footer> End Footer -->
+        <!--        <footer id="footer" class="footer">
+                    <div class="copyright">
+                        &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+                    </div>
+                    <div class="credits">
+                         All the links in the footer should remain intact. 
+                         You can delete the links only if you purchased the pro version. 
+                         Licensing information: https://bootstrapmade.com/license/ 
+                         Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ 
+                        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                    </div>
+                </footer> End Footer -->
 
         <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

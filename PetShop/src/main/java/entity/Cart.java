@@ -15,6 +15,17 @@ import java.util.Map;
  */
 public class Cart extends Product{
     private int quantity;
+    private double total_quantity;
+
+    public double getTotal_quantity() {
+        return total_quantity;
+    }
+
+    public void setTotal_quantity(double total_quantity) {
+        this.total_quantity = total_quantity;
+    }
+
+    
 
     public Cart() {
     }

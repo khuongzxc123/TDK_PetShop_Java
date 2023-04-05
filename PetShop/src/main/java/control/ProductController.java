@@ -8,6 +8,7 @@ import dao.DAO;
 import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,9 +34,11 @@ public class ProductController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String imageDirectory = "assets/img/product";
+        DecimalFormat dcf = new DecimalFormat("#,##0.000");
+        request.setAttribute("dcf", dcf);
         DAO dao = new DAO();
         List<Product> listP = dao.getAllProduct();
-        for(Product o : listP){
+        for (Product o : listP) {
             String imgUrl = imageDirectory + "/" + o.getProImg();
             o.setProImg(imgUrl);
         }

@@ -4,7 +4,9 @@
     Author     : Admin
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -70,17 +72,19 @@
                     <!-- End Messages Nav -->
                     <li class="nav-item dropdown pe-3">
                         <a class="nav-link nav-profile d-flex align-items-center pe-0" href="" data-bs-toggle="dropdown">
-                            <img src="${sessionScope.account.userImg}" alt="Profile" class="rounded-circle" width="50" height="50">
+                            <img src="assets/img/account/${sessionScope.account.userImg}" alt="Profile" class="rounded-circle" width="50" height="50">
+                            <span>${sessionScope.account.accountName}</span>
+
                             <span class="d-none d-md-block dropdown-toggle ps-2"></span>
                         </a><!-- End Profile Image Icon -->
 
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                            <li>
-                                <a class="dropdown-item d-flex align-items-center" href="">
-                                    <i class="bi bi-person"></i>
-                                    <span>Hello ${sessionScope.account.accountName}</span>
-                                </a>
-                            </li>
+                            <!--                            <li>
+                                                            <a class="dropdown-item d-flex align-items-center" href="">
+                                                                <i class="bi bi-person"></i>
+                                                                <span>Hello ${sessionScope.account.accountName}</span>
+                                                            </a>
+                                                        </li>-->
 
                             <li>
                                 <a class="dropdown-item d-flex align-items-center" href="loaduser?uid=${sessionScope.account.userId}">
@@ -178,6 +182,8 @@
             <div class="card">
                 <div class="card-body">
                     <table class="table table-stripped">
+                        <p class="text-danger">${error}</p>
+
                         <thead>
                             <tr>
                                 <th scope="col" style="text-align: center">Id</th>
@@ -194,7 +200,7 @@
                                     <th scope='row' style="text-align: center">${product.proId}</th>
                                     <th scope='row' style="text-align: center">${product.proName}</th>
                                     <th scope='row' style="text-align: center">${product.proCategory}</th>
-                                    <th scope='row' style="text-align: center">${product.proPrice} VNĐ</th>
+                                    <th scope='row' style="text-align: center"><fmt:formatNumber value="${product.proPrice}" type="number" pattern="#,##0.000" /></th>
                                     <th scope='row' style="text-align: center">${product.proAmount}</th>
                                     <th scope='row' style="text-align: center"><img src="${product.proImg}" style="width: 100px; height: 100px"></th>
                                     <td>

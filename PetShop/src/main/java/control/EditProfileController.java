@@ -57,6 +57,7 @@ public class EditProfileController extends HttpServlet {
         String userImg = request.getParameter("userImg");
         Part filePart = request.getPart("imageProfile");
         String fileName = filePart.getSubmittedFileName();
+
         if (!fileName.isEmpty()) {
             InputStream imageInputStream = filePart.getInputStream();
             File imageFile = new File("C:/Users/Admin/OneDrive/Documents/GitHub/TDK_PetShop_Java/PetShop/src/main/webapp/assets/img/account/" + fileName);

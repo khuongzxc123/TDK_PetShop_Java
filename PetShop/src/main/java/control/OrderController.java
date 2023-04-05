@@ -43,6 +43,7 @@ public class OrderController extends HttpServlet {
         Account account = (Account) request.getSession().getAttribute("account");
         if (account != null) {
             String proId = request.getParameter("proId");
+            double total = Double.parseDouble(request.getParameter("total"));
             int proQuantity = Integer.parseInt(request.getParameter("quantity"));
             if (proQuantity <= 0) {
                 proQuantity = 1;

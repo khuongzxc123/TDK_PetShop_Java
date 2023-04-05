@@ -67,6 +67,10 @@
         <servlet-name>CancelOrderController</servlet-name>
         <servlet-class>control.CancelOrderController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteuserController</servlet-name>
+        <servlet-class>control.DeleteuserController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/home</url-pattern>
@@ -130,6 +134,10 @@
     <servlet-mapping>
         <servlet-name>CancelOrderController</servlet-name>
         <url-pattern>/cancelorder</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteuserController</servlet-name>
+        <url-pattern>/deleteuser</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

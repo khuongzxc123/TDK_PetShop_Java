@@ -55,32 +55,42 @@ public class EditProductController extends HttpServlet {
         Part filePart = request.getPart("imageFile");
         String fileName = filePart.getSubmittedFileName();
         if (!fileName.isEmpty()) {
-            InputStream imageInputStream = filePart.getInputStream();
-            File imageFile = new File("C:/Users/Admin/OneDrive/Documents/GitHub/TDK_PetShop_Java/PetShop/src/main/webapp/assets/img/product/" + fileName);
-            File imageRemove = new File("C:/Users/Admin/OneDrive/Documents/GitHub/TDK_PetShop_Java/PetShop/src/main/webapp/assets/img/product/" + proImg);
-            Path path = Paths.get(imageRemove.getAbsolutePath());
-            Files.delete(path);
+            if (Integer.parseInt(proAmount) < 0 || Integer.parseInt(proAmount) > 50) {
+                request.setAttribute("error", "Số lượng không được bé hơn 0 và lớn hơn 50");
+                request.getRequestDispatcher("product").forward(request, response);
+            } else {
+                InputStream imageInputStream = filePart.getInputStream();
+                File imageFile = new File("C:/Users/Admin/OneDrive/Documents/GitHub/TDK_PetShop_Java/PetShop/src/main/webapp/assets/img/product/" + fileName);
+                File imageRemove = new File("C:/Users/Admin/OneDrive/Documents/GitHub/TDK_PetShop_Java/PetShop/src/main/webapp/assets/img/product/" + proImg);
+                Path path = Paths.get(imageRemove.getAbsolutePath());
+                Files.delete(path);
 
-            try ( FileOutputStream outputStream = new FileOutputStream(imageFile)) {
-                byte[] buffer = new byte[4096];
-                int bytesRead;
-                while ((bytesRead = imageInputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
+                try ( FileOutputStream outputStream = new FileOutputStream(imageFile)) {
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = imageInputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
 
+                    }
                 }
-            }
-            dao.updateProduct(proId, proName, proCategory, proPrice, proAmount, fileName);
-            try {
-                // Wait for 5 seconds
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                // Handle the exception
+                dao.updateProduct(proId, proName, proCategory, proPrice, proAmount, fileName);
+                try {
+                    // Wait for 5 seconds
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    // Handle the exception
 //                e.printStackTrace();
+                }
+                response.sendRedirect("product");
             }
-            response.sendRedirect("product");
         } else {
-            dao.updateProduct(proId, proName, proCategory, proPrice, proAmount, proImg);
-            response.sendRedirect("product");
+            if (Integer.parseInt(proAmount) < 0 || Integer.parseInt(proAmount) > 50) {
+                request.setAttribute("error", "Số lượng không được bé hơn 0 và lớn hơn 50");
+                request.getRequestDispatcher("product").forward(request, response);
+            } else {
+                dao.updateProduct(proId, proName, proCategory, proPrice, proAmount, proImg);
+                response.sendRedirect("product");
+            }
         }
 
 //        PrintWriter out = response.getWriter();

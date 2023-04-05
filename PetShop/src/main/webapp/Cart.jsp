@@ -92,17 +92,18 @@
                     <c:if test="${sessionScope.account.userName != null}">
                         <li class="nav-item dropdown pe-3">
                             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="" data-bs-toggle="dropdown">
-                                <img src="${sessionScope.account.userImg}" alt="Profile" class="rounded-circle" width="50" height="50">
+                                <img src="assets/img/account/${sessionScope.account.userImg}" alt="Profile" class="rounded-circle" width="50" height="50">
+                                <span>${sessionScope.account.accountName}</span>
                                 <span class="d-none d-md-block dropdown-toggle ps-2"></span>
                             </a><!-- End Profile Image Icon -->
 
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                                <li>
+<!--                                <li>
                                     <a class="dropdown-item d-flex align-items-center" href="">
                                         <i class="bi bi-person"></i>
                                         <span>Hello ${sessionScope.account.accountName}</span>
                                     </a>
-                                </li>
+                                </li>-->
 
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center" href="loaduser?uid=${sessionScope.account.userId}">
@@ -207,6 +208,7 @@
                             <td style="text-align: center">Name</td>
                             <td style="text-align: center">Category</td>
                             <td style="text-align: center">Price</td>
+                            <td style="text-align: center">Total Price</td>
                             <td style="text-align: center">Quantity</td>
                             <td style="text-align: center">Cancel</td>
                         </tr>
@@ -216,19 +218,21 @@
                             <td style="text-align: center"><%= c.getProName()%></td>
                             <td style="text-align: center"><%= c.getProCategory()%></td>
                             <td style="text-align: center"><%= dcf.format(c.getProPrice())%></td>
+                            <td style="text-align: center"><%= dcf.format(c.getTotal_quantity())%></td>
                             <td style="text-align: center">
                                 <form action="order" method="post" class="form-check-inline">
+                                    <input type="hidden" name="total" value="${total}" class="form-control">
                                     <input type="hidden" name="proId" value="<%= c.getProId()%>" class="form-control">
                                     <div class="form-group d-flex justify-content-between w-100">
                                         <a class="btn btn-sm btn-decre" href="quantity-inc-dec?action=dec&proId=<%= c.getProId()%>"><i class="fas fa-minus-square-square">-</i></a>
                                         <input type="text" name="quantity" value="<%= c.getQuantity()%>" class="form-control w-50" style="text-align: center;" readonly>
                                         <a class="btn btn-sm btn-incre" href="quantity-inc-dec?action=inc&proId=<%= c.getProId()%>"><i class="fas fa-plus-square-square">+</i></a>
-                                    <button type="submit" class="btn btn-primary btn-sm">Buy</button>
+                                        <button type="submit" class="btn btn-primary btn-sm">Buy</button>
                                     </div>
                                 </form>
                             </td>
                             <td style="text-align: center"><a class="btn btn-danger btn-sm" href="removecart?proId=<%= c.getProId()%>">Remove</a></td>
-                            
+
                         </tr>
                         <%}
                             }
@@ -279,18 +283,18 @@
         </main><!-- End #main -->
 
         <!-- ======= Footer ======= -->
-<!--        <footer id="footer" class="footer">
-            <div class="copyright">
-                &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
-            </div>
-            <div class="credits">
-                 All the links in the footer should remain intact. 
-                 You can delete the links only if you purchased the pro version. 
-                 Licensing information: https://bootstrapmade.com/license/ 
-                 Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ 
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-            </div>
-        </footer> End Footer -->
+        <!--        <footer id="footer" class="footer">
+                    <div class="copyright">
+                        &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights Reserved
+                    </div>
+                    <div class="credits">
+                         All the links in the footer should remain intact. 
+                         You can delete the links only if you purchased the pro version. 
+                         Licensing information: https://bootstrapmade.com/license/ 
+                         Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ 
+                        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+                    </div>
+                </footer> End Footer -->
 
         <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 

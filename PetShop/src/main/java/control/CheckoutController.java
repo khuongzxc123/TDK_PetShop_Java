@@ -8,6 +8,7 @@ import dao.DAO;
 import entity.Account;
 import entity.Cart;
 import entity.Order;
+import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -37,26 +38,28 @@ public class CheckoutController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         DAO dao = new DAO();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
         Date date = new Date();
         ArrayList<Cart> cart_list = (ArrayList<Cart>) request.getSession().getAttribute("cart-list");
         Account account = (Account) request.getSession().getAttribute("account");
-        if(cart_list != null && account != null){
-            for(Cart c : cart_list){
+        if (cart_list != null && account != null) {
+            for (Cart c : cart_list) {
                 Order order = new Order();
                 order.setProId(c.getProId());
                 order.setUid(Integer.parseInt(account.getUserId()));
                 order.setQuantity(c.getQuantity());
                 order.setDate(formatter.format(date));
                 boolean result = dao.insertOrder(order);
-                if(!result) break;
+                if (!result) {
+                    break;
+                }
             }
             cart_list.clear();
             response.sendRedirect("Orders.jsp");
-        }else{
-            if(account == null){
+        } else {
+            if (account == null) {
                 response.sendRedirect("Login.jsp");
-            }else{
+            } else {
                 response.sendRedirect("Cart.jsp");
             }
         }

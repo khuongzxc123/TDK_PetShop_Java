@@ -52,27 +52,31 @@ public class AddproductController extends HttpServlet {
         String proAmount = request.getParameter("proAmount");
 
         if (proName != null && proCategory != null && proPrice != null && proAmount != null) {
-            Part filePart = request.getPart("proImg");
-            String proImg = filePart.getSubmittedFileName();
-            InputStream imageInputStream = filePart.getInputStream();
-            File imageFile = new File("C:/Users/Admin/OneDrive/Documents/GitHub/TDK_PetShop_Java/PetShop/src/main/webapp/assets/img/product/" + proImg);
-            try ( FileOutputStream outputStream = new FileOutputStream(imageFile)) {
-                byte[] buffer = new byte[4096];
-                int bytesRead;
-                while ((bytesRead = imageInputStream.read(buffer)) != -1) {
-                    outputStream.write(buffer, 0, bytesRead);
+            if (Integer.parseInt(proAmount) < 0 || Integer.parseInt(proAmount) > 50) {
+                request.setAttribute("error", "Số lượng không được bé hơn 0 và lớn hơn 50");
+                request.getRequestDispatcher("AddProduct.jsp").forward(request, response);
+            } else {
+                Part filePart = request.getPart("proImg");
+                String proImg = filePart.getSubmittedFileName();
+                InputStream imageInputStream = filePart.getInputStream();
+                File imageFile = new File("C:/Users/Admin/OneDrive/Documents/GitHub/TDK_PetShop_Java/PetShop/src/main/webapp/assets/img/product/" + proImg);
+                try ( FileOutputStream outputStream = new FileOutputStream(imageFile)) {
+                    byte[] buffer = new byte[4096];
+                    int bytesRead;
+                    while ((bytesRead = imageInputStream.read(buffer)) != -1) {
+                        outputStream.write(buffer, 0, bytesRead);
+                    }
                 }
-            }
-            dao.insertProduct(proName, proCategory, proPrice, proAmount, proImg);
-            try {
-                // Wait for 5 seconds
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                // Handle the exception
+                dao.insertProduct(proName, proCategory, proPrice, proAmount, proImg);
+                try {
+                    // Wait for 5 seconds
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    // Handle the exception
 //                e.printStackTrace();
+                }
+                response.sendRedirect("product");
             }
-            response.sendRedirect("product");
-
         } else {
             request.getRequestDispatcher("AddProduct.jsp").forward(request, response);
         }

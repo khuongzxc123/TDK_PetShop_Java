@@ -68,17 +68,19 @@
                     <c:if test="${sessionScope.account.userName != null}">
                         <li class="nav-item dropdown pe-3">
                             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="" data-bs-toggle="dropdown">
-                                <img src="${sessionScope.account.userImg}" alt="Profile" class="rounded-circle" width="50" height="50">
+                                <img src="assets/img/account/${sessionScope.account.userImg}" alt="Profile" class="rounded-circle" width="50" height="50">
+                                <span>${sessionScope.account.accountName}</span>
+
                                 <span class="d-none d-md-block dropdown-toggle ps-2"></span>
                             </a><!-- End Profile Image Icon -->
 
                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-                                <li>
+<!--                                <li>
                                     <a class="dropdown-item d-flex align-items-center" href="">
                                         <i class="bi bi-person"></i>
                                         <span>Hello ${sessionScope.account.accountName}</span>
                                     </a>
-                                </li>
+                                </li>-->
 
                                 <li>
                                     <a class="dropdown-item d-flex align-items-center" href="loaduser?uid=${sessionScope.account.userId}">
@@ -165,25 +167,25 @@
         <main id="main" class="main">
             <div class="pagetitle">
                 <h1>Manage Account</h1>
-<!--                <nav>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active">Dashboard</li>
-                    </ol>
-                </nav>-->
+                <!--                <nav>
+                                    <ol class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                        <li class="breadcrumb-item active">Dashboard</li>
+                                    </ol>
+                                </nav>-->
             </div>
             <div class="card">
                 <div class="card-body">
 
                     <table class="table table-stripped">
                         <thead>
-                        <tr>
-                            <th scope="col" style="text-align: center">Id</th>
-                            <th scope="col" style="text-align: center">UserName</th>
-                            <th scope="col" style="text-align: center">Password</th>
-                            <th scope="col" style="text-align: center">Account Name</th>
-                            <th scope="col" style="text-align: center">User Image</th>
-                        </tr>
+                            <tr>
+                                <th scope="col" style="text-align: center">Id</th>
+                                <th scope="col" style="text-align: center">UserName</th>
+                                <th scope="col" style="text-align: center">Password</th>
+                                <th scope="col" style="text-align: center">Account Name</th>
+                                <th scope="col" style="text-align: center">User Image</th>
+                            </tr>
                         </thead>
 
                         <tbody>
@@ -195,7 +197,9 @@
                                     <th scope='row' style="text-align: center">${account.pass}</th>
                                     <th scope='row' style="text-align: center">${account.accountName}</th>
                                     <th scope='row' style="text-align: center"><img src="${account.userImg}" style="width: 100px; height: 100px"></th>
-
+<!--                                    <td>
+                                        <a href="deleteuser?uid=${account.userId}">DELETE</a>
+                                    </td>-->
                                 </tr>
                             </c:forEach>
                         </tbody>

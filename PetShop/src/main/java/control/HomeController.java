@@ -7,6 +7,7 @@ package control;
 import dao.DAO;
 import entity.Account;
 import entity.Cart;
+import entity.Category;
 import entity.Product;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -39,16 +40,12 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String imageDirectory = "assets/img/product";
-//        String imageDirectory2 = "assets/img/account";
         DAO dao = new DAO();
         HttpSession session = request.getSession();
+        
         List<Product> listP = dao.getAllProduct();
-//        List<Account> listA = dao.getAllAccount();
-        for (Product o : listP) {
-            String imgUrl = imageDirectory + "/" + o.getProImg();
-            o.setProImg(imgUrl);
-        }
+        List<Category> listC = dao.getAllCategory();
+        
         ArrayList<Cart> cart_list = (ArrayList<Cart>) session.getAttribute("cart-list");
         if (cart_list != null) {
             request.setAttribute("cart_list", cart_list);
@@ -58,6 +55,7 @@ public class HomeController extends HttpServlet {
 //            a.setUserImg(imgUrl);
 //        }
         //Set DATA to JSP
+        request.setAttribute("listC", listC);
         request.setAttribute("listP", listP);
         request.getRequestDispatcher("Home.jsp").forward(request, response);
     }
